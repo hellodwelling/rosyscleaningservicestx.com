@@ -40,11 +40,8 @@
 </script>      
      
     
-    
     <link href="https://prophone.herokuapp.com/staticfiles/landing_page_gen/style.css" rel="stylesheet">
-    
     <link href="https://prophone.herokuapp.com/staticfiles/landing_page_gen/render.css" rel="stylesheet">
-     <!-- <script src="/staticfiles/landing_page_gen/render.js"></script>   -->
     <script src="https://prophone.herokuapp.com/staticfiles/landing_page_gen/render.js"></script> 
 </head>
 
@@ -54,7 +51,7 @@
     
 
 <div class="fixed z-40 w-full lg:h-25 lg:py-4 items-start justify-start  bg-white text-gray-700  dark-mode:text-gray-200 dark-mode:bg-gray-800">
-  <div x-data="{ open: false }" class="flex flex-col lg:flex-r max-w-screen-xl px-4 mx-auto lg:items-center lg:justify-between lg:flex-row lg:px-6 lg:px-8">
+  <div x-data="{ open: false,buttonDisabled: false }" class="flex flex-col lg:flex-r max-w-screen-xl px-4 mx-auto lg:items-center lg:justify-between lg:flex-row lg:px-6 lg:px-8">
     <div class="py-4 flex flex-row items-center justify-between">
       
         <a href= " index "> <img class="h-16 w-auto relative" src="https://landing-page-app-hero-images.s3.amazonaws.com/media/a8d76279-0c57-4667-9b66-44300466a44fLogo.jpeg" alt="Rosy&#x27;s Cleaning Services logo"> </a>
@@ -87,7 +84,6 @@
     <div> Galleries
         <i class="fa fa-caret-down"></i>
     </div>
-    <!-- for desktop -->
     <div class="hidden lg:group-hover:opacity-100 lg:opacity-0 transition duration-500 ease-in-out lg:flex flex-col bg-white z-50 w-full min-w-max absolute top-10 shadow-lg rounded-md px-4 py-4 space-y-3">
         
             <a class="transparent rounded-lg text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="gallery-Bathroom-Cleaning"> Bathroom Cleaning </a>
@@ -99,7 +95,6 @@
             <a class="transparent rounded-lg text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="gallery-Cleaning-Videos"> Cleaning Videos </a>
         
     </div> 
-    <!-- for mobile b/c can't enable tailwind variants w/o postcss build -->
     <div id='mobile-dropdown' class="lg:hidden hidden transition duration-500 ease-in-out flex flex-col bg-white z-50 w-full min-w-max absolute top-10 shadow-lg rounded-md px-4 py-4 space-y-3">
         
             <a class="transparent rounded-lg text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="gallery-Bathroom-Cleaning"> Bathroom Cleaning </a>
@@ -134,7 +129,7 @@
       
           <a target = "_blank"  x-on:click.prevent="open = true" class="" href="">Send Us a Text</a>
             <div x-show.transition.opacity="open" class="transform-none p-4 fixed h-screen w-screen flex justify-center items-center bottom-0 right-0 bg-black bg-opacity-75 z-50">
-    <form x-on:click.away="open = false" x-show.transition="open" class=" text-black max-w-3xl max-h-full h-auto p-8 py-10 overflow-auto bg-white border-b-2 border-gray-300 rounded-lg shadow-2xl px-7 mt-16 md:mt-0 md:w-2/5 z-50">
+    <form  x-data="{ buttonDisabled: false }" x-on:click.away="open = false" x-show.transition="open" class=" text-black max-w-3xl max-h-full h-auto p-8 py-10 overflow-auto bg-white border-b-2 border-gray-300 rounded-lg shadow-2xl px-7 mt-16 md:mt-0 md:w-2/5 z-50">
             <h3 class="mb-6 text-2xl font-medium text-black text-center">Send Us a Text</h3>
         <div class="block mb-4 border border-gray-200 rounded-lg">
             <input type="text" name="first-name" id="0-first-name" class="block w-full px-4 py-3 border-2 border-transparent rounded-lg focus:border-blue-500 focus:outline-none" placeholder="First Name">
@@ -149,14 +144,18 @@
             <textarea name="message" cols="5" id="0-message" class="block w-full px-4 py-3 border-2 border-transparent rounded-lg focus:border-blue-500 focus:outline-none" placeholder="What is your message?"></textarea>
         </div>
         <div class="block">
-        <button type="button" 
+        <button
+
+                x-on:click.debounce.500ms="buttonDisabled = true ;send_sms(0, 'Rosy*$!s-Cleaning-Services')"
+                 x-bind:disabled="buttonDisabled"
+                type="button"
          
             onMouseOver="this.style.backgroundColor='#000000'; this.style.color='#9452cf' "
             onMouseOut="this.style.backgroundColor='#9452cf'; this.style.color='white'"
             style="background-color:#9452cf; color:white"               
 
          
-        onclick= "send_sms(0, 'Rosy&#x27;s-Cleaning-Services')" 
+
         class="w-full px-3 py-4 font-bold font-lg text-white  bg-gray-400 text-white hover:bg-black hover:text-gray-400 rounded-lg">Send</button> 
         </div>           
 
@@ -190,7 +189,7 @@
 </button>
 
         <div x-show.transition.opacity="open" class="transform-none p-4 fixed h-screen w-screen flex justify-center items-center bottom-0 right-0 bg-black bg-opacity-75 z-50">
-    <form x-on:click.away="open = false" x-show.transition="open" class=" text-black max-w-3xl max-h-full h-auto p-8 py-10 overflow-auto bg-white border-b-2 border-gray-300 rounded-lg shadow-2xl px-7 mt-16 md:mt-0 md:w-2/5 z-50">
+    <form  x-data="{ buttonDisabled: false }" x-on:click.away="open = false" x-show.transition="open" class=" text-black max-w-3xl max-h-full h-auto p-8 py-10 overflow-auto bg-white border-b-2 border-gray-300 rounded-lg shadow-2xl px-7 mt-16 md:mt-0 md:w-2/5 z-50">
             <h3 class="mb-6 text-2xl font-medium text-black text-center">Send Us a Text</h3>
         <div class="block mb-4 border border-gray-200 rounded-lg">
             <input type="text" name="first-name" id="2-first-name" class="block w-full px-4 py-3 border-2 border-transparent rounded-lg focus:border-blue-500 focus:outline-none" placeholder="First Name">
@@ -205,14 +204,18 @@
             <textarea name="message" cols="5" id="2-message" class="block w-full px-4 py-3 border-2 border-transparent rounded-lg focus:border-blue-500 focus:outline-none" placeholder="What is your message?"></textarea>
         </div>
         <div class="block">
-        <button type="button" 
+        <button
+
+                x-on:click.debounce.500ms="buttonDisabled = true ;send_sms(2, 'Rosy*$!s-Cleaning-Services')"
+                 x-bind:disabled="buttonDisabled"
+                type="button"
          
             onMouseOver="this.style.backgroundColor='#000000'; this.style.color='#9452cf' "
             onMouseOut="this.style.backgroundColor='#9452cf'; this.style.color='white'"
             style="background-color:#9452cf; color:white"               
 
          
-        onclick= "send_sms(2, 'Rosy&#x27;s-Cleaning-Services')" 
+
         class="w-full px-3 py-4 font-bold font-lg text-white  bg-gray-400 text-white hover:bg-black hover:text-gray-400 rounded-lg">Send</button> 
         </div>           
 
@@ -230,7 +233,6 @@
 
 
                 <h2 class="mb-3 text-3xl font-extrabold leading-none sm:text-4xl lg:text-7xl tracking-wide text-center ">
-                    
                     Testimonials &amp; Reviews</h2>
                 <div class="block w-full h-1 max-w-lg mt-6 bg-purple-100 rounded-full"></div>
                 
@@ -242,7 +244,6 @@
                     
                     <div class="flex flex-col items-center lg:items-start justify-center w-full h-auto mb-12 lg:w-1/2">
                     <div class="flex items-center lg:items-start ">
-                        
                         <div class="flex flex-col justify-start items-center lg:items-start ">
                             <h3 class="font-bold  text-white  ">Sergio Maldonado</h3>
                             <h3 class=" text-white ">Dallas, TX  , Residential Cleaning  </h3>
@@ -272,7 +273,6 @@
                     
                     <div class="flex flex-col items-center lg:items-start justify-center w-full h-auto mb-12 lg:w-1/2">
                     <div class="flex items-center lg:items-start ">
-                        
                         <div class="flex flex-col justify-start items-center lg:items-start ">
                             <h3 class="font-bold  text-white  ">Vita CreditQueen</h3>
                             <h3 class=" text-white ">Dallas, TX  , Deep Cleaning  </h3>
@@ -302,7 +302,6 @@
                     
                     <div class="flex flex-col items-center lg:items-start justify-center w-full h-auto mb-12 lg:w-1/2">
                     <div class="flex items-center lg:items-start ">
-                        
                         <div class="flex flex-col justify-start items-center lg:items-start ">
                             <h3 class="font-bold  text-white  ">Eric Valdes</h3>
                             <h3 class=" text-white ">Dallas, TX  , Deep Cleaning  </h3>
@@ -332,7 +331,6 @@
                     
                     <div class="flex flex-col items-center lg:items-start justify-center w-full h-auto mb-12 lg:w-1/2">
                     <div class="flex items-center lg:items-start ">
-                        
                         <div class="flex flex-col justify-start items-center lg:items-start ">
                             <h3 class="font-bold  text-white  ">Grogan CleanSlate</h3>
                             <h3 class=" text-white ">Dallas, TX  , Residential Cleaning  </h3>
@@ -362,7 +360,6 @@
                     
                     <div class="flex flex-col items-center lg:items-start justify-center w-full h-auto mb-12 lg:w-1/2">
                     <div class="flex items-center lg:items-start ">
-                        
                         <div class="flex flex-col justify-start items-center lg:items-start ">
                             <h3 class="font-bold  text-white  ">Kim Nguyen</h3>
                             <h3 class=" text-white ">Dallas, TX  , Residential Cleaning  </h3>
@@ -392,7 +389,6 @@
                     
                     <div class="flex flex-col items-center lg:items-start justify-center w-full h-auto mb-12 lg:w-1/2">
                     <div class="flex items-center lg:items-start ">
-                        
                         <div class="flex flex-col justify-start items-center lg:items-start ">
                             <h3 class="font-bold  text-white  ">Vanessa Munoz</h3>
                             <h3 class=" text-white ">Dallas, TX  , Residential Cleaning  </h3>
@@ -459,10 +455,8 @@
     
 
 <section  style= "background-color:#000000"   class="py-10 bg-gray-900">
-    
         <div class="flex flex-col justify-around text-center md:flex-row">
             <p class="order-last text-sm leading-tight text-gray-400 md:order-first"> Crafted with <a  href="https://www.prophone.com/prosite" class="  text-white ">ProPhone</a>. Built with ❤️ by our team. </p>
-             
             <ul class="flex flex-row flex-wrap text-center justify-center pb-3 lg:-ml-4 lg:-mr-4 text-sm">
                 <li> <a  style= "color:#9452cf"  href="#about" class="px-2 md:px-4 text-gray-400 hover:text-white">About Us</a> </li>
                 
@@ -481,7 +475,9 @@
                 
                 <li> <a  style= "color:#9452cf"  href="#find-us" class=" px-2 md:px-4 text-gray-400 hover:text-white">Service Areas</a></li>
                 
-                <li> <a  style= "color:#9452cf"  href='sitemap.xml' class=" px-2 md:px-4 text-gray-400 hover:text-white">Sitemap</a></li>
+                
+                <li> <a  style= "color:#9452cf"  href="rosyscleaningservicestx.com/sitemap.xml" class=" px-2 md:px-4 text-gray-400 hover:text-white">Sitemap</a></li>
+                
             </ul>
         </div>
     </div>
@@ -489,7 +485,6 @@
 </div> 
 
 <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
-  
 
 </body>
 </html>
