@@ -40,11 +40,8 @@
 </script>      
      
     
-    
     <link href="https://prophone.herokuapp.com/staticfiles/landing_page_gen/style.css" rel="stylesheet">
-    
     <link href="https://prophone.herokuapp.com/staticfiles/landing_page_gen/render.css" rel="stylesheet">
-     <!-- <script src="/staticfiles/landing_page_gen/render.js"></script>   -->
     <script src="https://prophone.herokuapp.com/staticfiles/landing_page_gen/render.js"></script> 
 </head>
 
@@ -54,7 +51,7 @@
     
 
 <div class="fixed z-40 w-full lg:h-25 lg:py-4 items-start justify-start  bg-white text-gray-700  dark-mode:text-gray-200 dark-mode:bg-gray-800">
-  <div x-data="{ open: false }" class="flex flex-col lg:flex-r max-w-screen-xl px-4 mx-auto lg:items-center lg:justify-between lg:flex-row lg:px-6 lg:px-8">
+  <div x-data="{ open: false,buttonDisabled: false }" class="flex flex-col lg:flex-r max-w-screen-xl px-4 mx-auto lg:items-center lg:justify-between lg:flex-row lg:px-6 lg:px-8">
     <div class="py-4 flex flex-row items-center justify-between">
       
         <a href= " index "> <img class="h-16 w-auto relative" src="https://landing-page-app-hero-images.s3.amazonaws.com/media/a8d76279-0c57-4667-9b66-44300466a44fLogo.jpeg" alt="Rosy&#x27;s Cleaning Services logo"> </a>
@@ -87,7 +84,6 @@
     <div> Galleries
         <i class="fa fa-caret-down"></i>
     </div>
-    <!-- for desktop -->
     <div class="hidden lg:group-hover:opacity-100 lg:opacity-0 transition duration-500 ease-in-out lg:flex flex-col bg-white z-50 w-full min-w-max absolute top-10 shadow-lg rounded-md px-4 py-4 space-y-3">
         
             <a class="transparent rounded-lg text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="gallery-Bathroom-Cleaning"> Bathroom Cleaning </a>
@@ -99,7 +95,6 @@
             <a class="transparent rounded-lg text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="gallery-Cleaning-Videos"> Cleaning Videos </a>
         
     </div> 
-    <!-- for mobile b/c can't enable tailwind variants w/o postcss build -->
     <div id='mobile-dropdown' class="lg:hidden hidden transition duration-500 ease-in-out flex flex-col bg-white z-50 w-full min-w-max absolute top-10 shadow-lg rounded-md px-4 py-4 space-y-3">
         
             <a class="transparent rounded-lg text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="gallery-Bathroom-Cleaning"> Bathroom Cleaning </a>
@@ -134,7 +129,7 @@
       
           <a target = "_blank"  x-on:click.prevent="open = true" class="" href="">Send Us a Text</a>
             <div x-show.transition.opacity="open" class="transform-none p-4 fixed h-screen w-screen flex justify-center items-center bottom-0 right-0 bg-black bg-opacity-75 z-50">
-    <form x-on:click.away="open = false" x-show.transition="open" class=" text-black max-w-3xl max-h-full h-auto p-8 py-10 overflow-auto bg-white border-b-2 border-gray-300 rounded-lg shadow-2xl px-7 mt-16 md:mt-0 md:w-2/5 z-50">
+    <form  x-data="{ buttonDisabled: false }" x-on:click.away="open = false" x-show.transition="open" class=" text-black max-w-3xl max-h-full h-auto p-8 py-10 overflow-auto bg-white border-b-2 border-gray-300 rounded-lg shadow-2xl px-7 mt-16 md:mt-0 md:w-2/5 z-50">
             <h3 class="mb-6 text-2xl font-medium text-black text-center">Send Us a Text</h3>
         <div class="block mb-4 border border-gray-200 rounded-lg">
             <input type="text" name="first-name" id="0-first-name" class="block w-full px-4 py-3 border-2 border-transparent rounded-lg focus:border-blue-500 focus:outline-none" placeholder="First Name">
@@ -149,14 +144,18 @@
             <textarea name="message" cols="5" id="0-message" class="block w-full px-4 py-3 border-2 border-transparent rounded-lg focus:border-blue-500 focus:outline-none" placeholder="What is your message?"></textarea>
         </div>
         <div class="block">
-        <button type="button" 
+        <button
+
+                x-on:click.debounce.500ms="buttonDisabled = true ;send_sms(0, 'Rosy*$!s-Cleaning-Services')"
+                 x-bind:disabled="buttonDisabled"
+                type="button"
          
             onMouseOver="this.style.backgroundColor='#000000'; this.style.color='#9452cf' "
             onMouseOut="this.style.backgroundColor='#9452cf'; this.style.color='white'"
             style="background-color:#9452cf; color:white"               
 
          
-        onclick= "send_sms(0, 'Rosy&#x27;s-Cleaning-Services')" 
+
         class="w-full px-3 py-4 font-bold font-lg text-white  bg-gray-400 text-white hover:bg-black hover:text-gray-400 rounded-lg">Send</button> 
         </div>           
 
@@ -198,7 +197,7 @@
 </button>
 
         <div x-show.transition.opacity="open" class="transform-none p-4 fixed h-screen w-screen flex justify-center items-center bottom-0 right-0 bg-black bg-opacity-75 z-50">
-    <form x-on:click.away="open = false" x-show.transition="open" class=" text-black max-w-3xl max-h-full h-auto p-8 py-10 overflow-auto bg-white border-b-2 border-gray-300 rounded-lg shadow-2xl px-7 mt-16 md:mt-0 md:w-2/5 z-50">
+    <form  x-data="{ buttonDisabled: false }" x-on:click.away="open = false" x-show.transition="open" class=" text-black max-w-3xl max-h-full h-auto p-8 py-10 overflow-auto bg-white border-b-2 border-gray-300 rounded-lg shadow-2xl px-7 mt-16 md:mt-0 md:w-2/5 z-50">
             <h3 class="mb-6 text-2xl font-medium text-black text-center">Send Us a Text</h3>
         <div class="block mb-4 border border-gray-200 rounded-lg">
             <input type="text" name="first-name" id="2-first-name" class="block w-full px-4 py-3 border-2 border-transparent rounded-lg focus:border-blue-500 focus:outline-none" placeholder="First Name">
@@ -213,14 +212,18 @@
             <textarea name="message" cols="5" id="2-message" class="block w-full px-4 py-3 border-2 border-transparent rounded-lg focus:border-blue-500 focus:outline-none" placeholder="What is your message?"></textarea>
         </div>
         <div class="block">
-        <button type="button" 
+        <button
+
+                x-on:click.debounce.500ms="buttonDisabled = true ;send_sms(2, 'Rosy*$!s-Cleaning-Services')"
+                 x-bind:disabled="buttonDisabled"
+                type="button"
          
             onMouseOver="this.style.backgroundColor='#000000'; this.style.color='#9452cf' "
             onMouseOut="this.style.backgroundColor='#9452cf'; this.style.color='white'"
             style="background-color:#9452cf; color:white"               
 
          
-        onclick= "send_sms(2, 'Rosy&#x27;s-Cleaning-Services')" 
+
         class="w-full px-3 py-4 font-bold font-lg text-white  bg-gray-400 text-white hover:bg-black hover:text-gray-400 rounded-lg">Send</button> 
         </div>           
 
@@ -234,124 +237,101 @@
         <div class="container relative flex flex-col justify-between h-full max-w-6xl px-10 mx-auto xl:px-0">
             <h2  style= "color:#000000" class="mb-3 text-3xl font-extrabold leading-none sm:text-4xl lg:text-7xl tracking-wide  text-center">Residential Cleaning</h2>
             <h2  style= "color:#9452cf" class="my-3 mb-10 text-xl font-medium  text-gray-400  text-center">Our Best Work</h2>
-            <div class="flex flex-wrap md:mx-4 md:mb-8 md:flex-row" x-data="{ open:false, activeSlide : 0, slides: [     [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/8d46dc66-66d7-44ee-a6bb-38a08efbd405.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/e356f76e-1e55-4227-aae5-15d9a1202860.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/a25c2027-d110-40fd-a157-58f609cf31d4.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/b01187b5-0d39-4b20-9e4e-5f0df80e81f6.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/f5da2df5-25b8-4762-ae62-bb8eb50b2805.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/b13764a0-f6f8-4147-b66f-4b30b83a4b94.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/6462768f-fbbb-4ff2-87b6-02c8a7f87f22.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/3e426ebd-f8e3-437c-bfb5-ae33e9b4a655.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/0c73f2b7-92c9-49ee-a93a-2bb976c249ca.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/d691bb1c-7907-4552-9918-6393e067bc13.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/5b56c2bd-3201-4039-8055-caba13a1ed80.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/bd461f06-9100-4a7b-9926-a5f599ea96dc.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/6493b598-4451-406e-a113-1ae6bd1b545b.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/91744ed0-0f98-4e7a-992d-28a9d07a1f58.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/089124e6-2926-4530-ab37-dd5f168a18e3.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/aa5513aa-7e98-434e-a85c-d1c5265df049.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/6fd8504e-4a2b-4f16-81fa-db99b43a294d.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/6d231b4a-4044-4d8a-9b71-f1a6afcba5e3.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/48bca70c-2529-4aa6-83ee-1014359ebb8d.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/ab8580d9-37a5-432f-b982-e032742cf5a7.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/186b16d5-ae25-4a78-aef2-49ecaa05bb03.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/15faf245-07ee-4792-b9a8-0e16e766080d.png', 'photo'],   ] }" @keydown.escape= "open = false"   >
-                <!-- <div class="flex flex-wrap md:mx-4 md:mb-8 md:flex-row" x-data="{ open:false, activeSlide : 0, slides: [     [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/1026x720/media/8d46dc66-66d7-44ee-a6bb-38a08efbd405.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/1026x720/media/e356f76e-1e55-4227-aae5-15d9a1202860.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/1026x720/media/a25c2027-d110-40fd-a157-58f609cf31d4.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/1026x720/media/b01187b5-0d39-4b20-9e4e-5f0df80e81f6.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/1026x720/media/f5da2df5-25b8-4762-ae62-bb8eb50b2805.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/1026x720/media/b13764a0-f6f8-4147-b66f-4b30b83a4b94.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/1026x720/media/6462768f-fbbb-4ff2-87b6-02c8a7f87f22.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/1026x720/media/3e426ebd-f8e3-437c-bfb5-ae33e9b4a655.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/1026x720/media/0c73f2b7-92c9-49ee-a93a-2bb976c249ca.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/1026x720/media/d691bb1c-7907-4552-9918-6393e067bc13.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/1026x720/media/5b56c2bd-3201-4039-8055-caba13a1ed80.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/1026x720/media/bd461f06-9100-4a7b-9926-a5f599ea96dc.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/1026x720/media/6493b598-4451-406e-a113-1ae6bd1b545b.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/1026x720/media/91744ed0-0f98-4e7a-992d-28a9d07a1f58.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/1026x720/media/089124e6-2926-4530-ab37-dd5f168a18e3.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/1026x720/media/aa5513aa-7e98-434e-a85c-d1c5265df049.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/1026x720/media/6fd8504e-4a2b-4f16-81fa-db99b43a294d.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/1026x720/media/6d231b4a-4044-4d8a-9b71-f1a6afcba5e3.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/1026x720/media/48bca70c-2529-4aa6-83ee-1014359ebb8d.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/1026x720/media/ab8580d9-37a5-432f-b982-e032742cf5a7.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/1026x720/media/186b16d5-ae25-4a78-aef2-49ecaa05bb03.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/1026x720/media/15faf245-07ee-4792-b9a8-0e16e766080d.png', 'photo'],   ] }" @keydown.escape= "open = false"   > -->
+            <div class="flex flex-wrap md:mx-4 md:mb-8 md:flex-row" x-data="{ open:false, activeSlide : 0, slides: [   [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/15faf245-07ee-4792-b9a8-0e16e766080d.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/186b16d5-ae25-4a78-aef2-49ecaa05bb03.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/ab8580d9-37a5-432f-b982-e032742cf5a7.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/48bca70c-2529-4aa6-83ee-1014359ebb8d.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/6d231b4a-4044-4d8a-9b71-f1a6afcba5e3.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/6fd8504e-4a2b-4f16-81fa-db99b43a294d.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/aa5513aa-7e98-434e-a85c-d1c5265df049.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/089124e6-2926-4530-ab37-dd5f168a18e3.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/91744ed0-0f98-4e7a-992d-28a9d07a1f58.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/6493b598-4451-406e-a113-1ae6bd1b545b.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/bd461f06-9100-4a7b-9926-a5f599ea96dc.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/5b56c2bd-3201-4039-8055-caba13a1ed80.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/d691bb1c-7907-4552-9918-6393e067bc13.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/0c73f2b7-92c9-49ee-a93a-2bb976c249ca.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/3e426ebd-f8e3-437c-bfb5-ae33e9b4a655.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/6462768f-fbbb-4ff2-87b6-02c8a7f87f22.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/b13764a0-f6f8-4147-b66f-4b30b83a4b94.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/f5da2df5-25b8-4762-ae62-bb8eb50b2805.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/b01187b5-0d39-4b20-9e4e-5f0df80e81f6.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/a25c2027-d110-40fd-a157-58f609cf31d4.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/e356f76e-1e55-4227-aae5-15d9a1202860.png', 'photo'],    [ 'https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/8d46dc66-66d7-44ee-a6bb-38a08efbd405.png', 'photo'],     ] }" @keydown.escape= "open = false"   >
+                                    
+                        
+                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 0; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/15faf245-07ee-4792-b9a8-0e16e766080d.png"  alt = "Photo number 40 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
+                    
+                                    
+                        
+                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 1; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/186b16d5-ae25-4a78-aef2-49ecaa05bb03.png"  alt = "Photo number 38 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
+                    
+                                    
+                        
+                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 2; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/ab8580d9-37a5-432f-b982-e032742cf5a7.png"  alt = "Photo number 37 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
+                    
+                                    
+                        
+                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 3; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/48bca70c-2529-4aa6-83ee-1014359ebb8d.png"  alt = "Photo number 36 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
+                    
+                                    
+                        
+                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 4; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/6d231b4a-4044-4d8a-9b71-f1a6afcba5e3.png"  alt = "Photo number 35 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
+                    
+                                    
+                        
+                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 5; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/6fd8504e-4a2b-4f16-81fa-db99b43a294d.png"  alt = "Photo number 34 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
+                    
+                                    
+                        
+                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 6; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/aa5513aa-7e98-434e-a85c-d1c5265df049.png"  alt = "Photo number 33 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
+                    
+                                    
+                        
+                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 7; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/089124e6-2926-4530-ab37-dd5f168a18e3.png"  alt = "Photo number 32 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
+                    
+                                    
+                        
+                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 8; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/91744ed0-0f98-4e7a-992d-28a9d07a1f58.png"  alt = "Photo number 31 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
+                    
+                                    
+                        
+                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 9; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/6493b598-4451-406e-a113-1ae6bd1b545b.png"  alt = "Photo number 28 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
+                    
+                                    
+                        
+                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 10; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/bd461f06-9100-4a7b-9926-a5f599ea96dc.png"  alt = "Photo number 27 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
+                    
+                                    
+                        
+                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 11; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/5b56c2bd-3201-4039-8055-caba13a1ed80.png"  alt = "Photo number 20 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
+                    
+                                    
+                        
+                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 12; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/d691bb1c-7907-4552-9918-6393e067bc13.png"  alt = "Photo number 19 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
+                    
+                                    
+                        
+                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 13; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/0c73f2b7-92c9-49ee-a93a-2bb976c249ca.png"  alt = "Photo number 18 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
+                    
+                                    
+                        
+                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 14; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/3e426ebd-f8e3-437c-bfb5-ae33e9b4a655.png"  alt = "Photo number 17 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
+                    
+                                    
+                        
+                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 15; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/6462768f-fbbb-4ff2-87b6-02c8a7f87f22.png"  alt = "Photo number 15 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
+                    
+                                    
+                        
+                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 16; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/b13764a0-f6f8-4147-b66f-4b30b83a4b94.png"  alt = "Photo number 14 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
+                    
+                                    
+                        
+                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 17; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/f5da2df5-25b8-4762-ae62-bb8eb50b2805.png"  alt = "Photo number 13 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
+                    
+                                    
+                        
+                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 18; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/b01187b5-0d39-4b20-9e4e-5f0df80e81f6.png"  alt = "Photo number 12 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
+                    
+                                    
+                        
+                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 19; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/a25c2027-d110-40fd-a157-58f609cf31d4.png"  alt = "Photo number 11 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
+                    
+                                    
+                        
+                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 20; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/e356f76e-1e55-4227-aae5-15d9a1202860.png"  alt="photo of best work"   loading="lazy" ></div>
+                    
+                                    
+                        
+                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 21; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/filters:strip_exif()/filters:format(webp)/media/8d46dc66-66d7-44ee-a6bb-38a08efbd405.png"  alt = "Photo number 1 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
+                    
                                     
                     
                         <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40">
-                            <video preload="metadata" class="rounded shadow-md object-cover w-full h-60" loading="lazy" controls> <source src="https://landing-page-app-hero-images.s3.amazonaws.com/media/6b6aa83e-1a8b-4f42-8002-882f631f2e44.quicktime#t=0.5" >
+                            <video class="rounded shadow-md object-contain w-full h-60" loading="lazy" autoplay loop controls muted> <source src="https://landing-page-app-hero-images.s3.amazonaws.com/media/6b6aa83e-1a8b-4f42-8002-882f631f2e44.quicktime#t=0.5" >
                             </video>
                         </div>
-                    
-                                    
-                        
-                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 1; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/8d46dc66-66d7-44ee-a6bb-38a08efbd405.png"  alt = "Photo number 1 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
-                        <!-- <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 1; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/684x480/media/8d46dc66-66d7-44ee-a6bb-38a08efbd405.png"  alt = "Photo number 1 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div> -->
-                    
-                                    
-                        
-                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 2; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/e356f76e-1e55-4227-aae5-15d9a1202860.png"  alt="photo of best work"   loading="lazy" ></div>
-                        <!-- <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 2; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/684x480/media/e356f76e-1e55-4227-aae5-15d9a1202860.png"  alt="photo of best work"   loading="lazy" ></div> -->
-                    
-                                    
-                        
-                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 3; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/a25c2027-d110-40fd-a157-58f609cf31d4.png"  alt = "Photo number 11 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
-                        <!-- <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 3; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/684x480/media/a25c2027-d110-40fd-a157-58f609cf31d4.png"  alt = "Photo number 11 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div> -->
-                    
-                                    
-                        
-                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 4; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/b01187b5-0d39-4b20-9e4e-5f0df80e81f6.png"  alt = "Photo number 12 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
-                        <!-- <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 4; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/684x480/media/b01187b5-0d39-4b20-9e4e-5f0df80e81f6.png"  alt = "Photo number 12 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div> -->
-                    
-                                    
-                        
-                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 5; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/f5da2df5-25b8-4762-ae62-bb8eb50b2805.png"  alt = "Photo number 13 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
-                        <!-- <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 5; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/684x480/media/f5da2df5-25b8-4762-ae62-bb8eb50b2805.png"  alt = "Photo number 13 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div> -->
-                    
-                                    
-                        
-                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 6; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/b13764a0-f6f8-4147-b66f-4b30b83a4b94.png"  alt = "Photo number 14 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
-                        <!-- <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 6; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/684x480/media/b13764a0-f6f8-4147-b66f-4b30b83a4b94.png"  alt = "Photo number 14 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div> -->
-                    
-                                    
-                        
-                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 7; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/6462768f-fbbb-4ff2-87b6-02c8a7f87f22.png"  alt = "Photo number 15 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
-                        <!-- <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 7; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/684x480/media/6462768f-fbbb-4ff2-87b6-02c8a7f87f22.png"  alt = "Photo number 15 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div> -->
-                    
-                                    
-                        
-                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 8; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/3e426ebd-f8e3-437c-bfb5-ae33e9b4a655.png"  alt = "Photo number 17 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
-                        <!-- <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 8; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/684x480/media/3e426ebd-f8e3-437c-bfb5-ae33e9b4a655.png"  alt = "Photo number 17 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div> -->
-                    
-                                    
-                        
-                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 9; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/0c73f2b7-92c9-49ee-a93a-2bb976c249ca.png"  alt = "Photo number 18 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
-                        <!-- <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 9; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/684x480/media/0c73f2b7-92c9-49ee-a93a-2bb976c249ca.png"  alt = "Photo number 18 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div> -->
-                    
-                                    
-                        
-                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 10; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/d691bb1c-7907-4552-9918-6393e067bc13.png"  alt = "Photo number 19 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
-                        <!-- <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 10; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/684x480/media/d691bb1c-7907-4552-9918-6393e067bc13.png"  alt = "Photo number 19 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div> -->
-                    
-                                    
-                        
-                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 11; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/5b56c2bd-3201-4039-8055-caba13a1ed80.png"  alt = "Photo number 20 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
-                        <!-- <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 11; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/684x480/media/5b56c2bd-3201-4039-8055-caba13a1ed80.png"  alt = "Photo number 20 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div> -->
-                    
-                                    
-                        
-                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 12; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/bd461f06-9100-4a7b-9926-a5f599ea96dc.png"  alt = "Photo number 27 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
-                        <!-- <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 12; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/684x480/media/bd461f06-9100-4a7b-9926-a5f599ea96dc.png"  alt = "Photo number 27 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div> -->
-                    
-                                    
-                        
-                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 13; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/6493b598-4451-406e-a113-1ae6bd1b545b.png"  alt = "Photo number 28 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
-                        <!-- <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 13; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/684x480/media/6493b598-4451-406e-a113-1ae6bd1b545b.png"  alt = "Photo number 28 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div> -->
-                    
-                                    
-                        
-                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 14; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/91744ed0-0f98-4e7a-992d-28a9d07a1f58.png"  alt = "Photo number 31 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
-                        <!-- <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 14; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/684x480/media/91744ed0-0f98-4e7a-992d-28a9d07a1f58.png"  alt = "Photo number 31 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div> -->
-                    
-                                    
-                        
-                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 15; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/089124e6-2926-4530-ab37-dd5f168a18e3.png"  alt = "Photo number 32 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
-                        <!-- <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 15; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/684x480/media/089124e6-2926-4530-ab37-dd5f168a18e3.png"  alt = "Photo number 32 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div> -->
-                    
-                                    
-                        
-                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 16; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/aa5513aa-7e98-434e-a85c-d1c5265df049.png"  alt = "Photo number 33 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
-                        <!-- <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 16; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/684x480/media/aa5513aa-7e98-434e-a85c-d1c5265df049.png"  alt = "Photo number 33 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div> -->
-                    
-                                    
-                        
-                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 17; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/6fd8504e-4a2b-4f16-81fa-db99b43a294d.png"  alt = "Photo number 34 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
-                        <!-- <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 17; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/684x480/media/6fd8504e-4a2b-4f16-81fa-db99b43a294d.png"  alt = "Photo number 34 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div> -->
-                    
-                                    
-                        
-                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 18; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/6d231b4a-4044-4d8a-9b71-f1a6afcba5e3.png"  alt = "Photo number 35 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
-                        <!-- <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 18; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/684x480/media/6d231b4a-4044-4d8a-9b71-f1a6afcba5e3.png"  alt = "Photo number 35 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div> -->
-                    
-                                    
-                        
-                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 19; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/48bca70c-2529-4aa6-83ee-1014359ebb8d.png"  alt = "Photo number 36 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
-                        <!-- <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 19; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/684x480/media/48bca70c-2529-4aa6-83ee-1014359ebb8d.png"  alt = "Photo number 36 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div> -->
-                    
-                                    
-                        
-                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 20; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/ab8580d9-37a5-432f-b982-e032742cf5a7.png"  alt = "Photo number 37 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
-                        <!-- <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 20; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/684x480/media/ab8580d9-37a5-432f-b982-e032742cf5a7.png"  alt = "Photo number 37 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div> -->
-                    
-                                    
-                        
-                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 21; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/186b16d5-ae25-4a78-aef2-49ecaa05bb03.png"  alt = "Photo number 38 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
-                        <!-- <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 21; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/684x480/media/186b16d5-ae25-4a78-aef2-49ecaa05bb03.png"  alt = "Photo number 38 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div> -->
-                    
-                                    
-                        
-                        <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 22; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/media/15faf245-07ee-4792-b9a8-0e16e766080d.png"  alt = "Photo number 40 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div>
-                        <!-- <div class="flex cursor-pointer sm:h-30 md:h-auto md:w-1/3 px-4 mb-8 hover:bg-opacity-40" @click="activeSlide = 22; open = true; " ><img class="rounded shadow-md object-cover w-full h-60" src="https://d3p2r6ofnvoe67.cloudfront.net/fit-in/684x480/media/15faf245-07ee-4792-b9a8-0e16e766080d.png"  alt = "Photo number 40 of Rosy&#x27;s Cleaning Services&#x27;s best work performing a null job"   loading="lazy" ></div> -->
                     
                  
                                     
@@ -388,7 +368,7 @@
                                     </template>
                                     
                                     <template x-if="slide[1] != 'photo'  ">
-                                        <video class="object-contain max-w-full max-h-full rounded shadow-lg"  controls> <source :src="slide[0]" >
+                                        <video class="object-cover max-w-full max-h-full rounded shadow-lg"  controls> <source :src="slide[0]" >
                                         </video>
                                     </template> 
                                     
@@ -444,10 +424,8 @@
     
 
 <section  style= "background-color:#000000"   class="py-10 bg-gray-900">
-    
         <div class="flex flex-col justify-around text-center md:flex-row">
             <p class="order-last text-sm leading-tight text-gray-400 md:order-first"> Crafted with <a  href="https://www.prophone.com/prosite" class="  text-white ">ProPhone</a>. Built with ❤️ by our team. </p>
-             
             <ul class="flex flex-row flex-wrap text-center justify-center pb-3 lg:-ml-4 lg:-mr-4 text-sm">
                 <li> <a  style= "color:#9452cf"  href="#about" class="px-2 md:px-4 text-gray-400 hover:text-white">About Us</a> </li>
                 
@@ -466,7 +444,9 @@
                 
                 <li> <a  style= "color:#9452cf"  href="#find-us" class=" px-2 md:px-4 text-gray-400 hover:text-white">Service Areas</a></li>
                 
-                <li> <a  style= "color:#9452cf"  href='sitemap.xml' class=" px-2 md:px-4 text-gray-400 hover:text-white">Sitemap</a></li>
+                
+                <li> <a  style= "color:#9452cf"  href="rosyscleaningservicestx.com/sitemap.xml" class=" px-2 md:px-4 text-gray-400 hover:text-white">Sitemap</a></li>
+                
             </ul>
         </div>
     </div>
@@ -474,7 +454,6 @@
 </div> 
 
 <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
-  
 
 </body>
 </html>
